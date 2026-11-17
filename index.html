@@ -52,7 +52,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:hidden}
-body{overflow-x:hidden;position:relative}
+body{overflow-x:hidden}
 body{margin:0;background:var(--night);color:var(--text);font-family:var(--sans);line-height:1.7;
   -webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;height:auto;display:block}
@@ -82,7 +82,7 @@ section{position:relative;padding:110px max(20px,env(safe-area-inset-left)) 110p
 .nav a:hover{color:var(--gold-hi)}
 
 /* ───────── hero ───────── */
-.hero{min-height:100svh;padding:90px 16px 70px;display:grid;place-items:center;overflow:hidden;isolation:isolate;
+.hero{position:relative;min-height:100svh;padding:90px 16px 70px;display:grid;place-items:center;overflow:hidden;isolation:isolate;
   background:
     radial-gradient(ellipse 60% 45% at 50% 30%,rgba(165,123,214,.38),transparent 70%),
     radial-gradient(ellipse 90% 60% at 50% 110%,rgba(107,63,160,.55),transparent 70%),
@@ -118,7 +118,7 @@ section{position:relative;padding:110px max(20px,env(safe-area-inset-left)) 110p
 
 /* long gold ribbon hanging from the top edge, swaying limply */
 .ribbon{position:absolute;top:0;right:clamp(8px,6%,40px);z-index:2;width:48px;height:clamp(120px,20vh,168px);
-  transform-origin:50% 0;animation:sway 6s ease-in-out infinite;filter:drop-shadow(0 10px 14px rgba(0,0,0,.6));pointer-events:none}
+  filter:drop-shadow(0 10px 14px rgba(0,0,0,.6));pointer-events:none}
 .ribbon::before{content:"";position:absolute;inset:0;background:var(--gold-grad);
   clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 18px),0 100%)}
 @keyframes sway{
@@ -138,8 +138,8 @@ section{position:relative;padding:110px max(20px,env(safe-area-inset-left)) 110p
 .bloom img{position:absolute;height:auto;max-width:none}
 .bloom .r-main{width:68%;bottom:0;left:12%;transform:rotate(-8deg);z-index:2;animation:drift 8s ease-in-out infinite}
 .bloom .r-sub{width:46%;top:2%;left:46%;transform:rotate(20deg) scaleX(-1);z-index:1;animation:drift 10s ease-in-out -4s infinite reverse;opacity:.6;filter:blur(.8px)}
-.bloom.l{left:4vw;transform:translateY(-50%)}
-.bloom.r{right:4vw;transform:translateY(-50%) scaleX(-1)}
+.bloom.l{left:max(8vw,calc(50% - 340px - clamp(280px,30vw,540px)));transform:translateY(-50%)}
+.bloom.r{right:max(8vw,calc(50% - 340px - clamp(280px,30vw,540px)));transform:translateY(-50%) scaleX(-1)}
 @media (max-width:760px){.bloom{opacity:.1;width:62vw}.bloom.l{left:-22vw}.bloom.r{right:-22vw}}
 
 /* petals */
@@ -194,14 +194,50 @@ section{position:relative;padding:110px max(20px,env(safe-area-inset-left)) 110p
 
 /* ───────── culture ───────── */
 .culture{background:linear-gradient(180deg,var(--abyss),var(--plum) 60%,var(--abyss))}
+.traits{margin:0 0 64px;padding:34px 30px 40px;border:1px solid rgba(216,179,106,.35);border-radius:18px;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(107,63,160,.32),rgba(42,22,69,.4) 70%);box-shadow:inset 0 0 0 5px rgba(18,10,32,.35)}
+.traits-head{display:flex;align-items:baseline;justify-content:center;gap:14px;margin-bottom:18px}
+.traits-head h3{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(18px,2.6vw,22px);color:var(--ivory)}
+.traits-head span{font-family:var(--serif);font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.cloud{list-style:none;margin:0 auto;padding:0;max-width:780px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 10px}
+.cloud li{opacity:0;transform:translate(var(--x,0),var(--y,0));filter:blur(3px);
+  transition:opacity 1s ease,transform 1.3s cubic-bezier(.2,.8,.2,1),filter 1s ease;transition-delay:var(--dl,0s)}
+.cloud li.br{flex-basis:100%;height:0;margin:-5px 0;padding:0;opacity:0}
+.cloud li span{display:inline-block;font-family:var(--sans);font-weight:600;font-size:15px;line-height:1;white-space:nowrap;
+  padding:9px 16px;border-radius:999px;animation:float var(--fd,7s) ease-in-out var(--fo,0s) infinite alternate}
+@keyframes float{from{transform:translateY(-3px)}to{transform:translateY(3px)}}
+.cloud .s span{color:rgba(201,180,238,.55);background:rgba(107,63,160,.12);border:1px solid rgba(167,127,214,.22)}
+.cloud .s.d span{color:rgba(201,180,238,.4);border-color:rgba(167,127,214,.14)}
+.cloud .b span{color:#2a1747;background:linear-gradient(180deg,#fbedc6,#e4c47f 60%,#cfa55c);border:1px solid #fff0c8;
+  box-shadow:0 0 18px rgba(216,179,106,.45),inset 0 1px 0 rgba(255,255,255,.6)}
+.traits.on .cloud li{opacity:1;transform:translate(0,var(--oy,0));filter:none}
+.cursor-glow{position:fixed;inset:0;z-index:40;pointer-events:none;opacity:0;transition:opacity .6s;mix-blend-mode:screen;overflow:hidden}
+.cursor-glow.on{opacity:1}
+.cursor-glow i{position:absolute;left:var(--gx,50%);top:var(--gy,50%);width:450px;height:450px;margin:-225px 0 0 -225px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(216,179,106,.15) 0%,rgba(205,165,120,.11) 18%,rgba(167,127,214,.065) 40%,rgba(167,127,214,.03) 60%,rgba(167,127,214,.01) 80%,rgba(167,127,214,0) 100%);
+  animation:glowSize 7.5s ease-in-out infinite alternate,glowLum 5.3s ease-in-out infinite alternate}
+@keyframes glowSize{0%{transform:scale(.84)}50%{transform:scale(.95)}100%{transform:scale(1)}}
+@keyframes glowLum{0%{opacity:.7}50%{opacity:1}100%{opacity:.82}}
+@media (hover:none),(prefers-reduced-motion:reduce){.cursor-glow{display:none}}
+.cloud li span{transition:color .35s,background-color .35s,border-color .35s,box-shadow .35s,translate .45s cubic-bezier(.3,1.4,.5,1),scale .45s cubic-bezier(.3,1.4,.5,1)}
+.cloud .s span{--p:0;color:rgba(201,180,238,calc(.42 + .45 * var(--p)));border-color:rgba(167,127,214,calc(.16 + .4 * var(--p)));translate:0 calc(-3px * var(--p))}
+.cloud .s.d span{color:rgba(201,180,238,calc(.32 + .5 * var(--p)))}
+.cloud .b span{position:relative;overflow:hidden;cursor:default}
+.cloud .b span:hover,.cloud .b span.pop{scale:1.08;box-shadow:0 0 26px rgba(251,237,198,.75),inset 0 1px 0 rgba(255,255,255,.6)}
+.cloud .s span:hover{color:#e7dbff;border-color:rgba(201,180,238,.7)}
+.spark{position:absolute;width:6px;height:6px;pointer-events:none;background:#fbedc6;transform:rotate(45deg);border-radius:1px;
+  box-shadow:0 0 8px #fbedc6;animation:spark .7s ease-out forwards}
+@keyframes spark{to{transform:translate(var(--sx),var(--sy)) rotate(45deg) scale(.2);opacity:0}}
+@media (prefers-reduced-motion:reduce){.cloud li,.cloud li span{transition:none;animation:none}}
 .gallery{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
-.shot{margin:0;position:relative;padding:8px;border-radius:6px;background:linear-gradient(135deg,var(--gold-hi),var(--gold-lo) 40%,var(--gold) 60%,var(--gold-lo));
-  box-shadow:0 24px 50px -28px #000}
-.shot .ph{position:relative;overflow:hidden;border-radius:3px;background:var(--night)}
+.shot{margin:0;position:relative;padding:6px;border-radius:12px;background:rgba(18,10,32,.55);border:1px solid rgba(216,179,106,.55);
+  box-shadow:0 24px 50px -28px #000;transition:border-color .4s,box-shadow .4s}
+.shot:hover{border-color:rgba(251,237,198,.85);box-shadow:0 24px 50px -28px #000,0 0 22px -6px rgba(216,179,106,.45)}
+.shot .ph{position:relative;overflow:hidden;border-radius:7px;background:var(--night);box-shadow:0 0 0 1px rgba(216,179,106,.28)}
 .shot img{width:100%;aspect-ratio:536/346;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .6s}
 .shot:hover img{transform:scale(1.06);filter:saturate(1.1)}
 .shot .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(18,10,32,.92));pointer-events:none}
-.shot figcaption{position:absolute;left:8px;right:8px;bottom:8px;z-index:1;padding:16px 20px 26px 32px;display:flex;align-items:center;gap:12px}
+.shot figcaption{position:absolute;left:6px;right:6px;bottom:6px;z-index:1;padding:16px 20px 26px 32px;display:flex;align-items:center;gap:12px}
 .shot figcaption .n{font-family:var(--serif);font-size:18px;line-height:1;color:var(--gold);letter-spacing:.1em;flex:none}
 .shot figcaption .t{font-family:var(--serif);font-weight:700;font-size:clamp(18px,3vw,26px);letter-spacing:-.03em;word-break:keep-all;color:var(--ivory);line-height:1.3;text-shadow:0 2px 10px #000}
 
@@ -288,6 +324,11 @@ footer small{font-size:14px;color:#7f6e98}
 @media (max-width:600px){
   section{padding-block:80px}
   .gallery{grid-template-columns:minmax(0,1fr);gap:16px}
+  .traits{margin-bottom:44px}
+  .traits{padding:26px 14px 30px}
+  .cloud{gap:8px}
+  .cloud li.br{display:none}
+  .cloud li span{font-size:14px;padding:8px 13px}
   .nav{justify-content:flex-start;padding-left:18px}
   .nav{padding-right:16px}
   .invite p.body br{display:none}
@@ -336,7 +377,7 @@ footer small{font-size:14px;color:#7f6e98}
 
 <nav class="nav" id="nav" aria-label="섹션">
   <ul>
-    <li class="opt"><a href="#invite">초대장</a></li>
+    <li class="opt"><a href="#top">초대장</a></li>
     <li><a href="#conditions">가입조건</a></li>
     <li><a href="#culture">길드문화</a></li>
     <li><a href="#notice">주의사항</a></li>
@@ -1871,6 +1912,47 @@ footer small{font-size:14px;color:#7f6e98}
         <h2 class="sec-title gold-text">길드문화</h2>
         <div class="orn"><svg><use href="#flourish"/></svg></div>
       </div>
+      <!-- 길드 성향 워드클라우드: class="b" 크게 강조(우리 길드), class="s" 작게 흐린 반대 성향 -->
+      <div class="traits rv">
+        <div class="traits-head"><h3>길드 성향</h3><span>Guild Style</span></div>
+        <ul class="cloud" aria-label="우리 길드 성향: 풀접속, 활기찬, 라이트유저, 끈끈한, 게임이야기, 지옥탐택, 반말모드, 일상이야기, 헤비유저, 함께하는, 기갱, 꾸준한성장">
+          <li class="s"><span>#조용한</span></li>
+          <li class="b"><span>#풀접속</span></li>
+          <li class="s"><span>#솔로위주</span></li>
+          <li class="s"><span>#경어모드</span></li>
+          <li class="s"><span>#느긋한</span></li>
+          <li class="b"><span>#활기찬</span></li>
+          <li class="s"><span>#차분한</span></li>
+          <li class="br" aria-hidden="true"></li>
+          <li class="b"><span>#라이트유저</span></li>
+          <li class="s"><span>#각자사냥</span></li>
+          <li class="s"><span>#편한성장</span></li>
+          <li class="b"><span>#끈끈한</span></li>
+          <li class="s"><span>#눈팅위주</span></li>
+          <li class="s"><span>#개인플레이</span></li>
+          <li class="b"><span>#게임이야기</span></li>
+          <li class="br" aria-hidden="true"></li>
+          <li class="s"><span>#존댓말</span></li>
+          <li class="s"><span>#현상유지</span></li>
+          <li class="b"><span>#지옥탐택</span></li>
+          <li class="s"><span>#혼자만의시간</span></li>
+          <li class="s"><span>#고요한</span></li>
+          <li class="b"><span>#반말모드</span></li>
+          <li class="s"><span>#격식체</span></li>
+          <li class="br" aria-hidden="true"></li>
+          <li class="b"><span>#일상이야기</span></li>
+          <li class="s"><span>#파벌/고정팟</span></li>
+          <li class="s"><span>#가끔접속</span></li>
+          <li class="s"><span>#개인파티</span></li>
+          <li class="b"><span>#헤비유저</span></li>
+          <li class="s"><span>#적당히</span></li>
+          <li class="b"><span>#함께하는</span></li>
+          <li class="br" aria-hidden="true"></li>
+          <li class="b"><span>#기갱</span></li>
+          <li class="b"><span>#꾸준한성장</span></li>
+          <li class="s"><span>#혼자공략</span></li>
+        </ul>
+      </div>
       <ul class="gallery">
         <li class="rv"><figure class="shot"><div class="ph"><img src="assets/photo1.jpg" width="536" height="346" alt="길드원 단체 사진" loading="lazy"></div><figcaption><span class="n">01</span><span class="t">데이안 서버 최초 여성길드 Lv.8</span></figcaption></figure></li>
         <li class="rv"><figure class="shot"><div class="ph"><img src="assets/photo2.jpg" width="536" height="346" alt="레이드 어비스 공략 화면" loading="lazy"></div><figcaption><span class="n">02</span><span class="t">매주 상시 레이드 · 어비스 길드파티</span></figcaption></figure></li>
@@ -2021,14 +2103,58 @@ footer small{font-size:14px;color:#7f6e98}
   if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return}
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(en){
-      if(en.isIntersecting){
+      if(en.isIntersecting&&en.intersectionRatio>=.12){
         var sib=[].slice.call(en.target.parentNode.children).indexOf(en.target);
         en.target.style.transitionDelay=Math.min(sib,6)*70+'ms';
-        en.target.classList.add('on');io.unobserve(en.target);
+        en.target.classList.add('on');
+      }else if(!en.isIntersecting){
+        en.target.style.transitionDelay='0ms';en.target.classList.remove('on');
       }
     });
-  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  },{threshold:[0,.12],rootMargin:'0px 0px -40px 0px'});
   els.forEach(function(e){io.observe(e)});
+})();
+// guild style word cloud: small antonyms drift in, key words pop last
+(function(){
+  var box=document.querySelector('.traits'); if(!box) return;
+  var r=function(a,b){return a+Math.random()*(b-a)};
+  var smalls=box.querySelectorAll('.cloud .s'),bigs=box.querySelectorAll('.cloud .b');
+  smalls.forEach(function(li,i){
+    li.style.setProperty('--x',r(-40,40).toFixed(0)+'px');li.style.setProperty('--y',r(-30,30).toFixed(0)+'px');
+    li.style.setProperty('--oy',r(-4,4).toFixed(0)+'px');li.style.setProperty('--dl',r(0,.6).toFixed(2)+'s');
+    if(i%3===1) li.classList.add('d');
+    var sp=li.firstElementChild;sp.style.setProperty('--fd',r(5,9).toFixed(1)+'s');sp.style.setProperty('--fo',(-r(0,8)).toFixed(1)+'s');
+  });
+  bigs.forEach(function(li,i){
+    li.style.setProperty('--dl',(.9+i*.18).toFixed(2)+'s');li.style.setProperty('--oy',r(-3,3).toFixed(0)+'px');
+    var sp=li.firstElementChild;sp.style.setProperty('--fd',r(7,10).toFixed(1)+'s');sp.style.setProperty('--fo',(-r(0,8)).toFixed(1)+'s');
+  });
+  // pointer spotlight + nearby tags brighten
+  var tags=[].slice.call(box.querySelectorAll('.cloud .s span')),raf=0,px=0,py=0;
+  function paint(){raf=0;var br=box.getBoundingClientRect();box.style.setProperty('--mx',(px-br.left)+'px');box.style.setProperty('--my',(py-br.top)+'px');
+    tags.forEach(function(t){var r=t.getBoundingClientRect(),d=Math.hypot(r.left+r.width/2-px,r.top+r.height/2-py);t.style.setProperty('--p',Math.max(0,1-d/150).toFixed(2))})}
+  box.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse')return;px=e.clientX;py=e.clientY;if(!raf)raf=requestAnimationFrame(paint)});
+  box.addEventListener('pointerleave',function(){tags.forEach(function(t){t.style.setProperty('--p',0)})});
+  // tap / click on a gold tag: little sparkle burst
+  box.addEventListener('click',function(e){var sp=e.target.closest('.b span');if(!sp)return;
+    sp.classList.add('pop');setTimeout(function(){sp.classList.remove('pop')},450);
+    var br=box.getBoundingClientRect(),r=sp.getBoundingClientRect(),cx=r.left+r.width/2-br.left,cy=r.top+r.height/2-br.top;
+    for(var k=0;k<10;k++){var d=document.createElement('i'),a=k/10*Math.PI*2+Math.random()*.5,len=30+Math.random()*30;d.className='spark';
+      d.style.left=(cx-3)+'px';d.style.top=(cy-3)+'px';d.style.setProperty('--sx',Math.cos(a)*len+'px');d.style.setProperty('--sy',Math.sin(a)*len+'px');
+      box.appendChild(d);setTimeout(function(n){return function(){n.remove()}}(d),750)}
+  });
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window)){box.classList.add('on');return}
+  var io=new IntersectionObserver(function(es){var e=es[0];if(e.isIntersecting&&e.intersectionRatio>=.3)box.classList.add('on');else if(!e.isIntersecting)box.classList.remove('on')},{threshold:[0,.3]});
+  io.observe(box);
+})();
+// page-wide soft light that follows the mouse
+(function(){
+  if(!matchMedia('(hover:hover)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var g=document.createElement('div'),raf=0,x=0,y=0;g.className='cursor-glow';g.setAttribute('aria-hidden','true');g.appendChild(document.createElement('i'));document.body.appendChild(g);
+  addEventListener('pointermove',function(e){if(e.pointerType!=='mouse')return;x=e.clientX;y=e.clientY;g.classList.add('on');
+    if(!raf)raf=requestAnimationFrame(function(){raf=0;g.style.setProperty('--gx',x+'px');g.style.setProperty('--gy',y+'px')})},{passive:true});
+  document.addEventListener('pointerleave',function(){g.classList.remove('on')});
+  document.documentElement.addEventListener('mouseleave',function(){g.classList.remove('on')});
 })();
 // eased anchor scrolling for nav links
 (function(){
