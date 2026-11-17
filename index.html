@@ -468,10 +468,10 @@ footer small{font-size:14px;color:#7f6e98}
   // 모바일(특히 아이폰)은 audio.volume을 무시하므로 Web Audio 게인으로 소리를 줄임
   var ctx=null,AC=window.AudioContext||window.webkitAudioContext;
   if(matchMedia('(pointer:coarse)').matches&&AC){
-    try{ctx=new AC();var gain=ctx.createGain();gain.gain.value=.04;
+    try{ctx=new AC();var gain=ctx.createGain();gain.gain.value=.02;
       ctx.createMediaElementSource(audio).connect(gain);gain.connect(ctx.destination);audio.volume=1}
-    catch(e){ctx=null;audio.volume=.04}
-  }else audio.volume=.08;
+    catch(e){ctx=null;audio.volume=.02}
+  }else audio.volume=.04;
   function wake(){if(ctx&&ctx.state!=='running'){try{ctx.resume()}catch(e){}}}
   function sync(){
     var playing=!audio.paused&&!audio.ended;
@@ -2172,7 +2172,7 @@ footer small{font-size:14px;color:#7f6e98}
         <p>이 편지를 읽고 계신 영애님께 로판은 따스한 안식처가 되어 드릴 것입니다. 아직 마비를 사랑하신다면, 영애님의 일상에 조금은 시끌벅적한 행복이 깃들기를 바라신다면, 언제든 찾아 주세요. 답장을 기다리겠습니다.</p>
       </div>
       <div class="orn sep"><svg><use href="#flourish"/></svg></div>
-      <p class="gm-sign">길드마스터 <b>아리아드네</b> 배상</p>
+      <p class="gm-sign">길드마스터 <b>아리아드네</b> 올림</p>
     </article>
   </section>
 
