@@ -297,6 +297,7 @@ section{position:relative;padding:110px max(20px,env(safe-area-inset-left)) 110p
 .letter .eyebrow{color:var(--gold-lo)}
 .letter h2{font-family:"HeirofLightTitle",var(--serif);font-weight:700;letter-spacing:-.04em;font-size:clamp(25px,4.8vw,38px);line-height:1.4;margin:12px 0 28px;color:#2c1648;text-wrap:balance}
 .letter h2 em{font-style:normal;color:var(--violet)}
+.letter h2 .nw{white-space:nowrap}
 .letter ul.lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
 .letter ul.lines li{font-family:var(--serif);font-size:clamp(15px,2.3vw,18px);line-height:1.65;text-wrap:balance}
 .letter ul.lines li b{color:var(--violet);font-weight:700}
@@ -464,7 +465,14 @@ footer small{font-size:14px;color:#7f6e98}
 (function(){
   var audio=document.getElementById('guild-bgm'),button=document.getElementById('bgm-toggle'),started=false;
   if(!audio||!button) return;
-  audio.volume=.08;
+  // 모바일(특히 아이폰)은 audio.volume을 무시하므로 Web Audio 게인으로 소리를 줄임
+  var ctx=null,AC=window.AudioContext||window.webkitAudioContext;
+  if(matchMedia('(pointer:coarse)').matches&&AC){
+    try{ctx=new AC();var gain=ctx.createGain();gain.gain.value=.04;
+      ctx.createMediaElementSource(audio).connect(gain);gain.connect(ctx.destination);audio.volume=1}
+    catch(e){ctx=null;audio.volume=.04}
+  }else audio.volume=.08;
+  function wake(){if(ctx&&ctx.state!=='running'){try{ctx.resume()}catch(e){}}}
   function sync(){
     var playing=!audio.paused&&!audio.ended;
     button.classList.toggle('playing',playing);
@@ -478,10 +486,11 @@ footer small{font-size:14px;color:#7f6e98}
   }
   function play(fromStart){
     if(fromStart&&!started){try{audio.currentTime=0}catch(e){}}
+    wake();
     var result=audio.play();
-    if(result&&result.then) result.then(function(){sync();stopUnlock()}).catch(sync);
+    if(result&&result.then) result.then(function(){sync();if(!ctx||ctx.state==='running')stopUnlock()}).catch(sync);
   }
-  function unlock(e){if(e&&button.contains(e.target)) return;play(true)}
+  function unlock(e){wake();if(e&&button.contains(e.target)) return;play(true)}
   button.addEventListener('click',function(){if(audio.paused)play(!started);else audio.pause()});
   audio.addEventListener('play',function(){started=true;sync()});
   audio.addEventListener('pause',sync);audio.addEventListener('ended',sync);
@@ -1988,7 +1997,7 @@ footer small{font-size:14px;color:#7f6e98}
       <div class="orn" style="margin:18px auto 26px"><svg><use href="#flourish"/></svg></div>
       <p class="lead">영애님만을 위한</p>
       <h2 class="gold-text">로맨스판타지 세계로<br>초대합니다</h2>
-      <p class="body">로맨스판타지 길드는 Lv.8의 데이안 서버 최초 여성 친목 길드입니다.<br>웹툰과 웹소설을 사랑하고, 마비노기 모바일을 함께하는 여성들이 모였습니다.<br>2025년 3월 27일 마비노기 모바일 오픈과 동시에 창설되었으며,<br>성장과 친목, 깊은 소속감을 위한 길드 단체 활동을 지향하고 있습니다.</p>
+      <p class="body">로맨스판타지 길드는 Lv.8의 데이안 서버 최초 여성 친목 길드입니다. <br>웹툰과 웹소설을 사랑하고, 마비노기 모바일을 함께하는 여성들이 모였습니다. <br>2025년 3월 27일 마비노기 모바일 오픈과 동시에 창설되었으며, <br>성장과 친목, 깊은 소속감을 위한 길드 단체 활동을 지향하고 있습니다.</p>
     </div>
   </section>
 
@@ -2156,7 +2165,7 @@ footer small{font-size:14px;color:#7f6e98}
       <svg class="corner bl" aria-hidden="true"><use href="#corner"/></svg>
       <svg class="corner br" aria-hidden="true"><use href="#corner"/></svg>
       <p class="eyebrow">Dear my Lady</p>
-      <h2>로맨스판타지의<br>길드마스터 <em>아리아드네</em>입니다.</h2>
+      <h2>로맨스판타지의<br>길드마스터 <span class="nw"><em>아리아드네</em>입니다.</span></h2>
       <div class="gm-note">
         <p>시즌2, 많이 힘드시지요? 요즘 마비가 많이 아픕니다. 정든 사람들이 하나둘 떠나는 모습에 아쉽고, 그립고, 슬픕니다. 추운 겨울이 어서 지나고, 다시 봄이 올 수 있기를 모두가 데브캣의 목소리를 기다리고 있습니다.</p>
         <p>로판도 다르지 않습니다. 우리는 서로의 온기로 이 계절을 견디고 있습니다. 사랑스럽고 따스하며 유쾌한 영애님들이 모여 서로에게 기대고 의지합니다. 유입도, 뉴비도 없이 다들 던전만 도는 삭막한 게임 속에서, 로판이라는 단단한 버팀목에 기대어 지내고 있습니다.</p>
