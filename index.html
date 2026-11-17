@@ -372,6 +372,49 @@ footer small{font-size:14px;color:#7f6e98}
   .shot img,.cond{transition:none}
   html{scroll-behavior:auto}
 }
+  #notice b .x{display:inline-block;position:relative;width:.75em;height:.75em;margin-left:3px;overflow:hidden;font-style:normal;-webkit-text-fill-color:transparent;vertical-align:baseline}
+  #notice b .x::before,#notice b .x::after{content:"";position:absolute;left:50%;top:50%;width:1.06em;height:.09em;border-radius:1px;background:currentColor;transform:translate(-50%,-50%) rotate(45deg)}
+  #notice b .x::after{transform:translate(-50%,-50%) rotate(-45deg)}
+
+/* ===== 갤러리(#moments): 스크롤하면 가로로 넘어가는 사진 ===== */
+@supports (overflow:clip){html,body{overflow-x:clip}} /* sticky 고정이 동작하도록 hidden 대신 clip */
+.moments{padding:0;background:linear-gradient(180deg,var(--abyss) 0%,var(--plum) 50%,var(--abyss) 100%)}
+.g-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding-top:40px;box-sizing:border-box}
+.g-pin .sec-head{margin-bottom:clamp(20px,3.5vh,40px);padding:0 20px}
+.g-track{--cw:min(60vw,920px,calc((100svh - 300px) * 16 / 9));--gap:clamp(18px,3vw,44px);
+  display:flex;gap:var(--gap);padding:18px calc(50vw - var(--cw) / 2);will-change:transform;
+  list-style:none;margin:0;box-sizing:content-box}
+.g-card{flex:none;position:relative;width:var(--cw);aspect-ratio:16/9;padding:0;border:0;background:#120a22;cursor:zoom-in;
+  transform:scale(var(--s,.8));filter:brightness(var(--b,.5)) saturate(var(--sat,.75));
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.7),0 0 calc(var(--f,0) * 46px) rgba(216,179,106,calc(var(--f,0) * .35))}
+.g-card img{display:block;width:100%;height:100%;object-fit:cover}
+.g-card::before,.g-card::after{content:"";position:absolute;pointer-events:none;opacity:var(--f,0)}
+.g-card::before{inset:-9px;border:1px solid var(--gold)}
+.g-card::after{inset:7px;border:1px solid rgba(246,228,180,.55)}
+.g-card:focus-visible{outline:2px solid var(--gold-hi);outline-offset:12px}
+.g-foot{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:clamp(18px,3.5vh,36px);font-family:var(--serif);color:var(--gold);font-size:14px;letter-spacing:.2em}
+.g-bar{width:min(220px,40vw);height:1px;background:rgba(216,179,106,.25);overflow:hidden}
+.g-bar i{display:block;height:100%;background:var(--gold-hi);transform-origin:left;transform:scaleX(var(--p,0))}
+.g-hint{margin:12px 0 0;text-align:center;font-size:14px;color:var(--lilac);opacity:.7}
+/* 모바일·터치·움직임 줄이기: 고정 없이 손가락으로 넘기기 */
+.moments.swipe .g-pin{position:static;height:auto;padding:100px 0 90px}
+.moments.swipe .g-track{--cw:84vw;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;transform:none!important;-webkit-overflow-scrolling:touch;padding:14px calc(50vw - var(--cw) / 2)}
+.moments.swipe .g-track::-webkit-scrollbar{display:none}
+.moments.swipe .g-card{scroll-snap-align:center}
+/* 크게 보기 */
+.g-lb{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(12,6,24,.94);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .35s ease}
+.g-lb[hidden]{display:none}
+.g-lb.on{opacity:1}
+.g-lb img{max-width:min(92vw,1600px);max-height:80vh;width:auto;height:auto;border:1px solid rgba(216,179,106,.6);box-shadow:0 30px 80px rgba(0,0,0,.6);user-select:none;-webkit-user-drag:none}
+.g-lb button{position:absolute;width:48px;height:48px;border-radius:50%;border:1px solid rgba(216,179,106,.6);background:rgba(27,15,48,.6);color:var(--gold-hi);
+  font-family:var(--sans);font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.g-lb button:hover{background:rgba(216,179,106,.18)}
+.g-lb .lb-x{top:max(18px,env(safe-area-inset-top));right:max(18px,env(safe-area-inset-right))}
+.g-lb .lb-prev{left:max(18px,env(safe-area-inset-left));top:50%;transform:translateY(-50%)}
+.g-lb .lb-next{right:max(18px,env(safe-area-inset-right));top:50%;transform:translateY(-50%)}
+.g-lb .lb-num{position:absolute;bottom:max(22px,env(safe-area-inset-bottom));left:0;right:0;margin:0;text-align:center;font-family:var(--serif);font-size:14px;letter-spacing:.2em;color:var(--gold)}
+@media (max-width:600px){.g-lb .lb-prev,.g-lb .lb-next{top:auto;bottom:max(12px,env(safe-area-inset-bottom));transform:none}.g-lb .lb-num{bottom:max(26px,env(safe-area-inset-bottom))}}
 </style>
 <style>.og .nav,.og .ribbon,.og .scroll-cue,.og .bgm-toggle{display:none!important}.og .hero{min-height:630px!important;height:630px!important}</style>
 </head>
@@ -1944,6 +1987,37 @@ footer small{font-size:14px;color:#7f6e98}
     </div>
   </section>
 
+  <section class="moments" id="moments" aria-label="함께한 순간들">
+    <div class="g-pin">
+      <div class="sec-head rv">
+        <p class="eyebrow">Moments</p>
+        <h2 class="sec-title gold-text">함께한 순간들</h2>
+        <div class="orn"><svg><use href="#flourish"/></svg></div>
+      </div>
+      <div class="g-track">
+        <button class="g-card" type="button" data-i="0" aria-label="사진 1 크게 보기"><img src="assets/gallery/g01-800.webp" srcset="assets/gallery/g01-800.webp 800w, assets/gallery/g01-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 1"></button>
+        <button class="g-card" type="button" data-i="1" aria-label="사진 2 크게 보기"><img src="assets/gallery/g02-800.webp" srcset="assets/gallery/g02-800.webp 800w, assets/gallery/g02-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 2"></button>
+        <button class="g-card" type="button" data-i="2" aria-label="사진 3 크게 보기"><img src="assets/gallery/g03-800.webp" srcset="assets/gallery/g03-800.webp 800w, assets/gallery/g03-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 3"></button>
+        <button class="g-card" type="button" data-i="3" aria-label="사진 4 크게 보기"><img src="assets/gallery/g04-800.webp" srcset="assets/gallery/g04-800.webp 800w, assets/gallery/g04-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 4"></button>
+        <button class="g-card" type="button" data-i="4" aria-label="사진 5 크게 보기"><img src="assets/gallery/g05-800.webp" srcset="assets/gallery/g05-800.webp 800w, assets/gallery/g05-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 5"></button>
+        <button class="g-card" type="button" data-i="5" aria-label="사진 6 크게 보기"><img src="assets/gallery/g06-800.webp" srcset="assets/gallery/g06-800.webp 800w, assets/gallery/g06-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 6"></button>
+        <button class="g-card" type="button" data-i="6" aria-label="사진 7 크게 보기"><img src="assets/gallery/g07-800.webp" srcset="assets/gallery/g07-800.webp 800w, assets/gallery/g07-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 7"></button>
+        <button class="g-card" type="button" data-i="7" aria-label="사진 8 크게 보기"><img src="assets/gallery/g08-800.webp" srcset="assets/gallery/g08-800.webp 800w, assets/gallery/g08-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 8"></button>
+        <button class="g-card" type="button" data-i="8" aria-label="사진 9 크게 보기"><img src="assets/gallery/g09-800.webp" srcset="assets/gallery/g09-800.webp 800w, assets/gallery/g09-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 9"></button>
+        <button class="g-card" type="button" data-i="9" aria-label="사진 10 크게 보기"><img src="assets/gallery/g10-800.webp" srcset="assets/gallery/g10-800.webp 800w, assets/gallery/g10-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 10"></button>
+      </div>
+      <div class="g-foot"><span class="g-num">01 / 10</span><span class="g-bar"><i></i></span></div>
+      <p class="g-hint">사진을 누르면 크게 볼 수 있어요</p>
+    </div>
+    <div class="g-lb" hidden role="dialog" aria-modal="true" aria-label="사진 크게 보기">
+      <img alt="">
+      <button class="lb-x" type="button" aria-label="닫기">×</button>
+      <button class="lb-prev" type="button" aria-label="이전 사진">‹</button>
+      <button class="lb-next" type="button" aria-label="다음 사진">›</button>
+      <p class="lb-num"></p>
+    </div>
+  </section>
+
   <section class="conditions" id="conditions">
     <div class="wrap">
       <div class="sec-head rv">
@@ -1976,7 +2050,6 @@ footer small{font-size:14px;color:#7f6e98}
           <li class="s"><span>#조용한</span></li>
           <li class="b"><span>#풀접속</span></li>
           <li class="s"><span>#솔로위주</span></li>
-          <li class="s"><span>#경어모드</span></li>
           <li class="s"><span>#느긋한</span></li>
           <li class="b"><span>#활기찬</span></li>
           <li class="s"><span>#차분한</span></li>
@@ -1995,11 +2068,11 @@ footer small{font-size:14px;color:#7f6e98}
           <li class="s"><span>#혼자만의시간</span></li>
           <li class="s"><span>#고요한</span></li>
           <li class="b"><span>#반말모드</span></li>
-          <li class="s"><span>#격식체</span></li>
+          <li class="b"><span>#따뜻한</span></li>
           <li class="br" aria-hidden="true"></li>
           <li class="b"><span>#일상이야기</span></li>
-          <li class="s"><span>#파벌/고정팟</span></li>
-          <li class="s"><span>#가끔접속</span></li>
+          <li class="b"><span>#친목지향</span></li>
+          <li class="b"><span>#재미있는</span></li>
           <li class="s"><span>#개인파티</span></li>
           <li class="b"><span>#헤비유저</span></li>
           <li class="s"><span>#적당히</span></li>
@@ -2019,10 +2092,10 @@ footer small{font-size:14px;color:#7f6e98}
         <ol class="legacy-list">
           <li class="rv"><span class="legacy-no">01</span><h4>전 서버 최초의 성인 여성 길드</h4><p>2025년 3월 27일, 마비노기 모바일 오픈과 동시에 문을 연 전 서버 최초의 성인 여성 친목 길드입니다.</p></li>
           <li class="rv"><span class="legacy-no">02</span><h4>전 서버 최초로 완성한 3단계 길드 함선</h4><p>모든 길드원이 직접 재료를 채집하고 가공해 함께 만들었습니다. 로판 영애들의 잊지 못할 추억입니다.</p></li>
-          <li class="rv"><span class="legacy-no">03</span><h4>단 한 번도 쉬어 간 적 없는 공식 길드 파티</h4><p>매주 월요일과 화요일, 정해진 시간에 영애님들과 함께합니다. 단 한 주도 빠짐없이 모두가 참여할 수 있도록 챙깁니다.</p></li>
+          <li class="rv"><span class="legacy-no">03</span><h4>매주 함께하는 공식 길드 파티</h4><p>매주 월요일과 화요일, 정해진 시간에 영애님들과 함께합니다. 단 한 주도 빠짐없이 모두가 참여할 수 있도록 챙깁니다.</p></li>
           <li class="rv"><span class="legacy-no">04</span><h4>나이 등 개인 신상을 절대 묻지 않습니다</h4><p>적당한 선을 지키며 친목을 나누고, 셀털은 각자의 선택에 맡깁니다. 개인적인 이야기를 하지 않아도 충분히 즐거우니까요.</p></li>
           <li class="rv"><span class="legacy-no">05</span><h4>성장 의지만 있다면 끝까지 이끌어 드립니다</h4><p>“난 안 돼”, “난 못 해”보다 “할 수 있어”, “다시 해 보자”라는 말을 더 자주 합니다. 전투에 대한 토론과 조언을 아끼지 않습니다.</p></li>
-          <li class="rv"><span class="legacy-no">06</span><h4>행복한 일상도 함께 나눕니다</h4><p>회사에서 일어나는 시시콜콜한 이야기부터 맛있는 과일 공구와 웹툰·웹소설 추천까지, 영애님들과 함께라면 지루할 틈이 없습니다.</p></li>
+          <li class="rv"><span class="legacy-no">06</span><h4>행복한 일상도 함께 나눕니다</h4><p>각자의 시시콜콜한 일상 이야기부터 맛있는 과일 공구와 웹툰·웹소설 추천까지, 영애님들과 함께라면 지루할 틈이 없습니다.</p></li>
         </ol>
       </div>
     </div>
@@ -2036,12 +2109,11 @@ footer small{font-size:14px;color:#7f6e98}
         <div class="orn"><svg><use href="#flourish"/></svg></div>
       </div>
       <ol class="rules">
-        <li class="rv"><span class="rn">I</span><div><b>철새 및 파벌 생성은 강력히 제재합니다</b><span>모두가 함께 어울리는 열린 길드를 지향합니다</span></div></li>
-        <li class="rv"><span class="rn">II</span><div><b>소통 없는 활동은 어렵습니다</b><span>오픈 채팅과 길드 채팅 참여, 기본적인 상호 소통을 부탁드립니다</span></div></li>
-        <li class="rv"><span class="rn">III</span><div><b>샤프롱(버스 기사)을 힘들게 하지 않습니다</b><span>적정 전투력과 마도 저항 기준을 마련해 길드 파티를 운영합니다</span></div></li>
-        <li class="rv"><span class="rn">IV</span><div><b>길드 내 분쟁 요소를 엄격히 관리합니다</b><span>연애 관계, 정보 유출, 혐오 표현 등 길드 분위기를 해치는 행위는 강력히 제재합니다</span></div></li>
-        <li class="rv"><span class="rn">V</span><div><b>데이안을 주 서버로 이용하는 분만 가입할 수 있습니다</b><span>하루 접속 시간이 2시간 이상인 분을 대상으로 합니다</span></div></li>
-        <li class="rv"><span class="rn">VI</span><div><b>동반 가입은 2인으로 제한합니다</b><span>동시에 가입하는 인원은 최대 2인까지 가능합니다</span></div></li>
+        <li class="rv"><span class="rn">I</span><div><b>철새<i class="x">X</i>, 고정팟<i class="x">X</i>, 파벌 생성은 강력히 제재합니다</b><span>모두가 함께 어울리는 열린 길드를 지향합니다</span></div></li>
+        <li class="rv"><span class="rn">II</span><div><b>소통 없는 활동은 어렵습니다</b><span>친목지향 길드입니다. 오픈 채팅과 길드 채팅 참여, 기본적인 상호 소통을 부탁드립니다.</span></div></li>
+        <li class="rv"><span class="rn">III</span><div><b>길드 내 분쟁 요소를 엄격히 관리합니다</b><span>유연 관계, 혐오 표현, 길드 분쟁 등 길드 분위기를 해치는 행위는 강력히 제재합니다.</span></div></li>
+        <li class="rv"><span class="rn">IV</span><div><b>데이안을 주 서버로 이용하는 분만 가입할 수 있습니다</b><span>하루 접속 시간이 2시간 이상인, 데이안 서버가 주 서버인 분들이 대상입니다.</span></div></li>
+        <li class="rv"><span class="rn">V</span><div><b>동반 가입은 2인으로 제한합니다</b><span>동시에 가입하는 인원은 최대 2인까지 가능합니다</span></div></li>
       </ol>
     </div>
   </section>
@@ -2062,7 +2134,7 @@ footer small{font-size:14px;color:#7f6e98}
         </blockquote></li>
         <li class="rv"><blockquote>
           <p>응애이고 싶었는데 영애가 된지 벌써 반년이 되었어요. 따뜻한 버스와 일상까지 응원해주는 로판 가좍들 덕분에 에린이 외롭지 않았습니다.. 앞으로도 무조건적인 지지 부탁드립니다.</p>
-          <footer><span class="who">시시</span><span class="meta">사제 · 가입 6개월</span></footer>
+          <footer><span class="who">시시</span><span class="meta">사제 · 가입 6개월차</span></footer>
         </blockquote></li>
         <li class="rv"><blockquote>
           <p>나이도 묻지 않고 선 넘는 사람도 없어서 편해요. 연주하고 스샷 찍고 노는 날도, 빡겜하는 날도 있어서 질릴 틈이 없는 길드예요.</p>
@@ -2241,6 +2313,64 @@ footer small{font-size:14px;color:#7f6e98}
       history.replaceState(null,'','#'+id);
     });
   });
+})();
+/* 갤러리: 스크롤하면 가로로 넘어가고, 가운데 사진이 커지며 금장 액자가 생김 */
+(function(){
+  var sec=document.getElementById('moments');if(!sec)return;
+  var pin=sec.querySelector('.g-pin'),track=sec.querySelector('.g-track'),cards=[].slice.call(sec.querySelectorAll('.g-card'));
+  var num=sec.querySelector('.g-num'),bar=sec.querySelector('.g-bar'),hint=sec.querySelector('.g-hint');
+  var N=cards.length,pad2=function(n){return(n<10?'0':'')+n};
+  var mq=matchMedia('(min-width:821px) and (hover:hover) and (prefers-reduced-motion:no-preference)');
+  var pinMode=false,dist=0,cw=0,centers=[],ticking=false,last=-1;
+  function layout(){
+    pinMode=mq.matches;sec.classList.toggle('swipe',!pinMode);
+    hint.textContent=pinMode?'스크롤하면 사진이 넘어가요 · 누르면 크게 볼 수 있어요':'옆으로 넘겨 보세요 · 누르면 크게 볼 수 있어요';
+    track.style.transform='';
+    cw=cards[0].offsetWidth;centers=cards.map(function(c){return c.offsetLeft+c.offsetWidth/2});
+    if(pinMode){dist=Math.max(0,track.scrollWidth-innerWidth);sec.style.height=(dist+pin.offsetHeight)+'px'}
+    else{sec.style.height=''}
+    update();
+  }
+  function update(){
+    ticking=false;var shift,p;
+    if(pinMode){
+      var r=sec.getBoundingClientRect(),run=sec.offsetHeight-pin.offsetHeight;
+      if(r.bottom<-50||r.top>innerHeight+50)return;
+      p=run>0?Math.min(1,Math.max(0,-r.top/run)):0;shift=p*dist;
+      track.style.transform='translate3d('+(-shift)+'px,0,0)';
+    }else{
+      shift=track.scrollLeft;var m=track.scrollWidth-track.clientWidth;p=m>0?shift/m:0;
+    }
+    var mid=(pinMode?innerWidth:track.clientWidth)/2,best=0,bd=1e9;
+    for(var i=0;i<N;i++){
+      var dx=Math.abs(centers[i]-shift-mid),d=Math.min(1,dx/(cw*1.05)),f=Math.max(0,1-d*1.6);
+      var st=cards[i].style;st.setProperty('--s',(1-.2*d).toFixed(3));st.setProperty('--b',(1-.5*d).toFixed(3));
+      st.setProperty('--sat',(1-.25*d).toFixed(3));st.setProperty('--f',f.toFixed(3));
+      if(dx<bd){bd=dx;best=i}
+    }
+    if(best!==last){last=best;num.textContent=pad2(best+1)+' / '+pad2(N)}
+    bar.style.setProperty('--p',p.toFixed(4));
+  }
+  function req(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
+  addEventListener('scroll',req,{passive:true});track.addEventListener('scroll',req,{passive:true});
+  addEventListener('resize',layout);(mq.addEventListener?mq.addEventListener('change',layout):mq.addListener(layout));
+  if(document.readyState==='complete')layout();else addEventListener('load',layout);layout();
+
+  /* 크게 보기 */
+  var lb=sec.querySelector('.g-lb'),lbImg=lb.querySelector('img'),lbNum=lb.querySelector('.lb-num'),cur=0,lastFocus=null,tx=null;
+  function show(i){cur=(i+N)%N;var s=cards[cur].querySelector('img');lbImg.src=s.src.replace('-800.','-1600.');lbImg.alt=s.alt;lbNum.textContent=pad2(cur+1)+' / '+pad2(N)}
+  function open(i){lastFocus=document.activeElement;show(i);lb.hidden=false;document.documentElement.style.overflow='hidden';
+    requestAnimationFrame(function(){lb.classList.add('on')});lb.querySelector('.lb-x').focus()}
+  function close(){lb.classList.remove('on');document.documentElement.style.overflow='';setTimeout(function(){lb.hidden=true},300);if(lastFocus)lastFocus.focus()}
+  cards.forEach(function(c,i){c.addEventListener('click',function(){open(i)})});
+  lb.querySelector('.lb-x').addEventListener('click',close);
+  lb.querySelector('.lb-prev').addEventListener('click',function(){show(cur-1)});
+  lb.querySelector('.lb-next').addEventListener('click',function(){show(cur+1)});
+  lb.addEventListener('click',function(e){if(e.target===lb)close()});
+  addEventListener('keydown',function(e){if(lb.hidden)return;
+    if(e.key==='Escape')close();else if(e.key==='ArrowLeft')show(cur-1);else if(e.key==='ArrowRight')show(cur+1)});
+  lb.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+  lb.addEventListener('touchend',function(e){if(tx==null)return;var dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50)show(cur+(dx<0?1:-1))});
 })();
 </script>
 </body>
