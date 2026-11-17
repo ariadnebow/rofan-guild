@@ -95,7 +95,7 @@ section{position:relative;padding:110px max(20px,env(safe-area-inset-left)) 110p
 .bgm-toggle:not(.playing)::after{content:"";position:absolute;left:13px;width:22px;height:1px;background:currentColor;transform:rotate(-42deg);opacity:.75}
 
 /* ───────── hero ───────── */
-.hero{position:relative;min-height:100svh;padding:90px 16px 70px;display:grid;place-items:center;overflow:hidden;isolation:isolate;
+.hero{position:relative;min-height:100svh;padding:90px 16px 110px;display:grid;place-items:center;overflow:hidden;isolation:isolate;
   background:
     radial-gradient(ellipse 60% 45% at 50% 30%,rgba(165,123,214,.38),transparent 70%),
     radial-gradient(ellipse 90% 60% at 50% 110%,rgba(107,63,160,.55),transparent 70%),
@@ -117,7 +117,7 @@ section{position:relative;padding:110px max(20px,env(safe-area-inset-left)) 110p
 .moon{position:absolute;z-index:-1;top:9%;left:50%;width:min(62vw,520px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;
   background:radial-gradient(circle at 50% 50%,rgba(239,230,250,.22),rgba(205,182,238,.08) 45%,transparent 70%);filter:blur(2px)}
 
-.portal{position:relative;width:min(92vw,560px,calc((100svh - 150px)*.737));min-width:300px;aspect-ratio:560/760;container-type:inline-size;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.portal{position:relative;width:min(92vw,560px,calc((100svh - 210px)*.737));min-width:300px;aspect-ratio:560/760;container-type:inline-size;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .portal > svg.frame{position:absolute;inset:0;width:100%;height:100%;z-index:-1;overflow:visible}
 .portal .inner{padding:14% 8% 6%;display:flex;flex-direction:column;align-items:center}
 .hero .tag{font-family:var(--serif);font-size:14px;letter-spacing:.14em;color:var(--lilac);margin:0 0 14px;padding-left:.18em}
@@ -363,7 +363,8 @@ footer small{font-size:14px;color:#7f6e98}
   .shot figcaption .n{font-size:14px}
   .shot figcaption .t{font-size:17px}
   .nav ul{gap:13px;overflow-x:auto;scrollbar-width:none;white-space:nowrap}.nav ul::-webkit-scrollbar{display:none}
-  .nav a{font-size:14px;letter-spacing:.02em}
+  .nav a{font-size:14px;letter-spacing:.02em;display:block;padding:10px 0;margin:-10px 0}
+  .nav ul{padding:10px 0;margin:-10px 0}
   .nav li.opt{display:none}
   .rules li{padding:18px 18px;gap:16px}.rules .rn{width:40px;height:40px;font-size:14px}
   .ribbon{width:34px;top:50px;height:104px}
@@ -404,7 +405,7 @@ footer small{font-size:14px;color:#7f6e98}
 .g-hint{margin:12px 0 0;text-align:center;font-size:14px;color:var(--lilac);opacity:.7}
 /* 모바일·터치·움직임 줄이기: 고정 없이 손가락으로 넘기기 */
 .moments.swipe .g-pin{position:static;height:auto;padding:100px 0 90px}
-.moments.swipe .g-track{--cw:84vw;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;transform:none!important;-webkit-overflow-scrolling:touch;padding:14px calc(50vw - var(--cw) / 2)}
+.moments.swipe .g-track{--cw:72vw;--gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;transform:none!important;-webkit-overflow-scrolling:touch;padding:14px calc(50vw - var(--cw) / 2)}
 .moments.swipe .g-track::-webkit-scrollbar{display:none}
 .moments.swipe .g-card{scroll-snap-align:center}
 /* 크게 보기 */
@@ -449,7 +450,7 @@ footer small{font-size:14px;color:#7f6e98}
   <ul>
     <li class="opt"><a href="#top">초대장</a></li>
     <li><a href="#conditions">가입조건</a></li>
-    <li><a href="#culture">길드문화</a></li>
+    <li><a href="#culture">길드성향</a></li>
     <li><a href="#notice">주의사항</a></li>
     <li><a href="#rofan">로판이란</a></li>
     <li><a href="#contact">문의안내</a></li>
@@ -2009,16 +2010,16 @@ footer small{font-size:14px;color:#7f6e98}
         <div class="orn"><svg><use href="#flourish"/></svg></div>
       </div>
       <div class="g-track">
-        <button class="g-card" type="button" data-i="0" aria-label="사진 1 크게 보기"><img src="assets/gallery/g01-800.webp" srcset="assets/gallery/g01-800.webp 800w, assets/gallery/g01-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 1"></button>
-        <button class="g-card" type="button" data-i="1" aria-label="사진 2 크게 보기"><img src="assets/gallery/g02-800.webp" srcset="assets/gallery/g02-800.webp 800w, assets/gallery/g02-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 2"></button>
-        <button class="g-card" type="button" data-i="2" aria-label="사진 3 크게 보기"><img src="assets/gallery/g03-800.webp" srcset="assets/gallery/g03-800.webp 800w, assets/gallery/g03-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 3"></button>
-        <button class="g-card" type="button" data-i="3" aria-label="사진 4 크게 보기"><img src="assets/gallery/g04-800.webp" srcset="assets/gallery/g04-800.webp 800w, assets/gallery/g04-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 4"></button>
-        <button class="g-card" type="button" data-i="4" aria-label="사진 5 크게 보기"><img src="assets/gallery/g05-800.webp" srcset="assets/gallery/g05-800.webp 800w, assets/gallery/g05-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 5"></button>
-        <button class="g-card" type="button" data-i="5" aria-label="사진 6 크게 보기"><img src="assets/gallery/g06-800.webp" srcset="assets/gallery/g06-800.webp 800w, assets/gallery/g06-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 6"></button>
-        <button class="g-card" type="button" data-i="6" aria-label="사진 7 크게 보기"><img src="assets/gallery/g07-800.webp" srcset="assets/gallery/g07-800.webp 800w, assets/gallery/g07-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 7"></button>
-        <button class="g-card" type="button" data-i="7" aria-label="사진 8 크게 보기"><img src="assets/gallery/g08-800.webp" srcset="assets/gallery/g08-800.webp 800w, assets/gallery/g08-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 8"></button>
-        <button class="g-card" type="button" data-i="8" aria-label="사진 9 크게 보기"><img src="assets/gallery/g09-800.webp" srcset="assets/gallery/g09-800.webp 800w, assets/gallery/g09-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 9"></button>
-        <button class="g-card" type="button" data-i="9" aria-label="사진 10 크게 보기"><img src="assets/gallery/g10-800.webp" srcset="assets/gallery/g10-800.webp 800w, assets/gallery/g10-1600.webp 1600w" sizes="(min-width:821px) 60vw, 84vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 10"></button>
+        <button class="g-card" type="button" data-i="0" aria-label="사진 1 크게 보기"><img src="assets/gallery/g01-800.webp" srcset="assets/gallery/g01-800.webp 800w, assets/gallery/g01-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 1"></button>
+        <button class="g-card" type="button" data-i="1" aria-label="사진 2 크게 보기"><img src="assets/gallery/g02-800.webp" srcset="assets/gallery/g02-800.webp 800w, assets/gallery/g02-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 2"></button>
+        <button class="g-card" type="button" data-i="2" aria-label="사진 3 크게 보기"><img src="assets/gallery/g03-800.webp" srcset="assets/gallery/g03-800.webp 800w, assets/gallery/g03-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 3"></button>
+        <button class="g-card" type="button" data-i="3" aria-label="사진 4 크게 보기"><img src="assets/gallery/g04-800.webp" srcset="assets/gallery/g04-800.webp 800w, assets/gallery/g04-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 4"></button>
+        <button class="g-card" type="button" data-i="4" aria-label="사진 5 크게 보기"><img src="assets/gallery/g05-800.webp" srcset="assets/gallery/g05-800.webp 800w, assets/gallery/g05-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 5"></button>
+        <button class="g-card" type="button" data-i="5" aria-label="사진 6 크게 보기"><img src="assets/gallery/g06-800.webp" srcset="assets/gallery/g06-800.webp 800w, assets/gallery/g06-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 6"></button>
+        <button class="g-card" type="button" data-i="6" aria-label="사진 7 크게 보기"><img src="assets/gallery/g07-800.webp" srcset="assets/gallery/g07-800.webp 800w, assets/gallery/g07-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 7"></button>
+        <button class="g-card" type="button" data-i="7" aria-label="사진 8 크게 보기"><img src="assets/gallery/g08-800.webp" srcset="assets/gallery/g08-800.webp 800w, assets/gallery/g08-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 8"></button>
+        <button class="g-card" type="button" data-i="8" aria-label="사진 9 크게 보기"><img src="assets/gallery/g09-800.webp" srcset="assets/gallery/g09-800.webp 800w, assets/gallery/g09-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 9"></button>
+        <button class="g-card" type="button" data-i="9" aria-label="사진 10 크게 보기"><img src="assets/gallery/g10-800.webp" srcset="assets/gallery/g10-800.webp 800w, assets/gallery/g10-1600.webp 1600w" sizes="(min-width:821px) 60vw, 72vw" width="1600" height="900" loading="lazy" decoding="async" alt="길드원들과 함께한 게임 속 장면 10"></button>
       </div>
       <div class="g-foot"><span class="g-num">01 / 10</span><span class="g-bar"><i></i></span></div>
       <p class="g-hint">사진을 누르면 크게 볼 수 있어요</p>
@@ -2053,13 +2054,12 @@ footer small{font-size:14px;color:#7f6e98}
   <section class="culture" id="culture">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="eyebrow">Guild Culture</p>
-        <h2 class="sec-title gold-text">길드문화</h2>
+        <p class="eyebrow">Guild Style</p>
+        <h2 class="sec-title gold-text">길드 성향</h2>
         <div class="orn"><svg><use href="#flourish"/></svg></div>
       </div>
       <!-- 길드 성향 워드클라우드: class="b" 크게 강조(우리 길드), class="s" 작게 흐린 반대 성향 -->
       <div class="traits rv">
-        <div class="traits-head"><h3>길드 성향</h3><span>Guild Style</span></div>
         <ul class="cloud" aria-label="우리 길드 성향: 풀접속, 활기찬, 라이트유저, 끈끈한, 게임이야기, 지옥탐택, 반말모드, 일상이야기, 헤비유저, 함께하는, 기갱, 꾸준한성장">
           <li class="s"><span>#조용한</span></li>
           <li class="b"><span>#풀접속</span></li>
@@ -2123,11 +2123,11 @@ footer small{font-size:14px;color:#7f6e98}
         <div class="orn"><svg><use href="#flourish"/></svg></div>
       </div>
       <ol class="rules">
-        <li class="rv"><span class="rn">I</span><div><b>철새<i class="x">X</i>, 고정팟<i class="x">X</i>, 파벌 생성은 강력히 제재합니다</b><span>모두가 함께 어울리는 열린 길드를 지향합니다</span></div></li>
+        <li class="rv"><span class="rn">I</span><div><b>철새<i class="x">X</i>, 고정팟<i class="x">X</i>, 파벌 생성은 강력히 제재합니다</b><span>모두가 함께 어울리는 열린 길드를 지향합니다.</span></div></li>
         <li class="rv"><span class="rn">II</span><div><b>소통 없는 활동은 어렵습니다</b><span>친목지향 길드입니다. 오픈 채팅과 길드 채팅 참여, 기본적인 상호 소통을 부탁드립니다.</span></div></li>
         <li class="rv"><span class="rn">III</span><div><b>길드 내 분쟁 요소를 엄격히 관리합니다</b><span>유연 관계, 혐오 표현, 길드 분쟁 등 길드 분위기를 해치는 행위는 강력히 제재합니다.</span></div></li>
         <li class="rv"><span class="rn">IV</span><div><b>데이안을 주 서버로 이용하는 분만 가입할 수 있습니다</b><span>하루 접속 시간이 2시간 이상인, 데이안 서버가 주 서버인 분들이 대상입니다.</span></div></li>
-        <li class="rv"><span class="rn">V</span><div><b>동반 가입은 2인으로 제한합니다</b><span>동시에 가입하는 인원은 최대 2인까지 가능합니다</span></div></li>
+        <li class="rv"><span class="rn">V</span><div><b>동반 가입은 2인으로 제한합니다</b><span>동시에 가입하는 인원은 최대 2인까지 가능합니다.</span></div></li>
       </ol>
     </div>
   </section>
@@ -2353,7 +2353,7 @@ footer small{font-size:14px;color:#7f6e98}
     var mid=(pinMode?innerWidth:track.clientWidth)/2,best=0,bd=1e9;
     for(var i=0;i<N;i++){
       var dx=Math.abs(centers[i]-shift-mid),d=Math.min(1,dx/(cw*1.05)),f=Math.max(0,1-d*1.6);
-      var st=cards[i].style;st.setProperty('--s',(1-.2*d).toFixed(3));st.setProperty('--b',(1-.5*d).toFixed(3));
+      var st=cards[i].style;st.setProperty('--s',(1-(pinMode?.2:.1)*d).toFixed(3));st.setProperty('--b',(1-.5*d).toFixed(3));
       st.setProperty('--sat',(1-.25*d).toFixed(3));st.setProperty('--f',f.toFixed(3));
       if(dx<bd){bd=dx;best=i}
     }
@@ -2364,6 +2364,8 @@ footer small{font-size:14px;color:#7f6e98}
   addEventListener('scroll',req,{passive:true});track.addEventListener('scroll',req,{passive:true});
   addEventListener('resize',layout);(mq.addEventListener?mq.addEventListener('change',layout):mq.addListener(layout));
   if(document.readyState==='complete')layout();else addEventListener('load',layout);layout();
+  /* 가로로 옮겨지는 사진은 지연 로딩이 늦게 걸릴 수 있어, 섹션이 가까워지면 전부 미리 불러옴 */
+  if('IntersectionObserver' in window){var pre=new IntersectionObserver(function(es){if(es[0].isIntersecting){cards.forEach(function(c){c.querySelector('img').loading='eager'});pre.disconnect()}},{rootMargin:'1200px 0px'});pre.observe(sec)}
 
   /* 크게 보기 */
   var lb=sec.querySelector('.g-lb'),lbImg=lb.querySelector('img'),lbNum=lb.querySelector('.lb-num'),cur=0,lastFocus=null,tx=null;
