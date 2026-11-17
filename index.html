@@ -300,6 +300,11 @@ section{position:relative;padding:110px max(20px,env(safe-area-inset-left)) 110p
 .letter ul.lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
 .letter ul.lines li{font-family:var(--serif);font-size:clamp(15px,2.3vw,18px);line-height:1.65;text-wrap:balance}
 .letter ul.lines li b{color:var(--violet);font-weight:700}
+.letter .gm-note{margin:22px auto 0;max-width:600px}
+.letter .gm-note p{font-family:var(--serif);font-size:clamp(15px,2.3vw,18px);line-height:1.9;margin:0 0 1em;word-break:keep-all;text-wrap:pretty}
+.letter .gm-note p:last-child{margin-bottom:0}
+.letter .gm-sign{font-family:var(--serif);font-size:15px;color:#5a3a86;margin:0;letter-spacing:.04em}
+.letter .gm-sign b{font-weight:700;font-size:18px;color:#2c1648;margin-left:6px}
 .letter .sep{margin:34px auto 26px;color:var(--gold-lo)}
 .letter .sep::before,.letter .sep::after{background:linear-gradient(90deg,transparent,var(--gold-lo))}
 .tags{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 8px}
@@ -2151,19 +2156,14 @@ footer small{font-size:14px;color:#7f6e98}
       <svg class="corner bl" aria-hidden="true"><use href="#corner"/></svg>
       <svg class="corner br" aria-hidden="true"><use href="#corner"/></svg>
       <p class="eyebrow">Dear my Lady</p>
-      <h2>로맨스판타지 길드의<br><em>소중한 인연</em>이 되어주세요</h2>
-      <ul class="lines">
-        <li>다양한 장르의 웹소설, 웹툰을 사랑하시고 <b>덕질 좋아하시는</b> 영애님</li>
-        <li>엔드 컨텐츠, 지옥 등 도전 좋아하시고 <b>트라이 하시는 멋진</b> 영애님</li>
-        <li>원활한 인간관계와 상호소통, 기본적인 윤리의식을 가진 <b>우아한</b> 영애님</li>
-        <li>서로 도움 주고받으며 길드원과 함께 <b>단체 생활을 즐기시는</b> 영애님</li>
-        <li>(나이 오픈 ✕) 적절한 친목과 게임 이야기를 <b>즐길 줄 아는</b> 영애님</li>
-      </ul>
+      <h2>로맨스판타지의<br>길드마스터 <em>아리아드네</em>입니다.</h2>
+      <div class="gm-note">
+        <p>시즌2, 많이 힘드시지요? 요즘 마비가 많이 아픕니다. 정든 사람들이 하나둘 떠나는 모습에 아쉽고, 그립고, 슬픕니다. 추운 겨울이 어서 지나고, 다시 봄이 올 수 있기를 모두가 데브캣의 목소리를 기다리고 있습니다.</p>
+        <p>로판도 다르지 않습니다. 우리는 서로의 온기로 이 계절을 견디고 있습니다. 사랑스럽고 따스하며 유쾌한 영애님들이 모여 서로에게 기대고 의지합니다. 유입도, 뉴비도 없이 다들 던전만 도는 삭막한 게임 속에서, 로판이라는 단단한 버팀목에 기대어 지내고 있습니다.</p>
+        <p>이 편지를 읽고 계신 영애님께 로판은 따스한 안식처가 되어 드릴 것입니다. 아직 마비를 사랑하신다면, 영애님의 일상에 조금은 시끌벅적한 행복이 깃들기를 바라신다면, 언제든 찾아 주세요. 답장을 기다리겠습니다.</p>
+      </div>
       <div class="orn sep"><svg><use href="#flourish"/></svg></div>
-      <ul class="tags" aria-label="길드 분위기">
-        <li>#직장인성인여성길드</li><li>#웹툰웹소설덕후</li><li>#풀접속</li><li>#즐겜&amp;빡겜</li><li>#기갱러환영</li><li>#음식사진OK</li>
-        <li class="no">#철새NO</li><li class="no">#파벌/고정팟NO</li><li class="no">#소통없음NO</li><li class="no">#사람사진NO</li>
-      </ul>
+      <p class="gm-sign">길드마스터 <b>아리아드네</b> 배상</p>
     </article>
   </section>
 
